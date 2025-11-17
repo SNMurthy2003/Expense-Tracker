@@ -6,24 +6,26 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 // GET handler to fetch all expenses
-export async function GET(request) {
+export async function GET() {
   try {
     await connectDB();
 
     const expenses = await Expense.find({}).sort({ date: -1 });
-    console.log("✅ Fetched expenses:", expenses.length);
 
+    // Always return consistent structure with data array
     return NextResponse.json({
       success: true,
-      count: expenses.length,
       data: expenses
     }, { status: 200 });
+
   } catch (error) {
-    console.error("❌ Error fetching expenses:", error);
+    console.error("Error fetching expenses:", error);
+
+    // Always return empty array to prevent frontend crashes
     return NextResponse.json({
       success: false,
-      message: "Server Error",
-      error: error.message
+      error: error.message || "Failed to fetch expenses",
+      data: []
     }, { status: 500 });
   }
 }
@@ -34,31 +36,17 @@ export async function POST(request) {
     await connectDB();
 
     const body = await request.json();
-    console.log("=== EXPENSE DEBUG START ===");
-    console.log("Received expense data:", body);
-    console.log("=== EXPENSE DEBUG END ===");
-
     const { title, amount, category, description, date, teamName } = body;
 
-    // Log each field
-    console.log("Extracted fields:");
-    console.log("- title:", title);
-    console.log("- amount:", amount);
-    console.log("- category:", category);
-    console.log("- description:", description);
-    console.log("- date:", date);
-    console.log("- teamName:", teamName);
-
-    // Validation
+    // Validation - ensure required fields
     if (!title || !amount || !category) {
-      console.log("❌ Validation failed");
       return NextResponse.json({
         success: false,
-        message: "Please provide title, amount, and category",
-        received: { title, amount, category }
+        error: "Please provide title, amount, and category"
       }, { status: 400 });
     }
 
+    // Create new expense
     const expense = new Expense({
       title,
       amount,
@@ -68,25 +56,20 @@ export async function POST(request) {
       teamName: teamName || "Default Team"
     });
 
-    console.log("Attempting to save expense:", expense);
     const savedExpense = await expense.save();
-    console.log("✅ Expense saved successfully:", savedExpense);
 
     return NextResponse.json({
       success: true,
       message: "Expense added successfully",
       data: savedExpense
     }, { status: 201 });
+
   } catch (error) {
-    console.error("❌ FULL ERROR:", error);
-    console.error("Error name:", error.name);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error("Error adding expense:", error);
+
     return NextResponse.json({
       success: false,
-      message: "Server Error",
-      error: error.message,
-      details: error.toString()
+      error: error.message || "Failed to add expense"
     }, { status: 500 });
   }
 }
