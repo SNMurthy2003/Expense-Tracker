@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import { connectDB } from '@/lib/db';
 import Team from '@/lib/models/Team';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // DELETE handler to remove a team by ID
 export async function DELETE(request, { params }) {

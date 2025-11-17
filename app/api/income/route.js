@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
+import { connectDB } from '@/lib/db';
 import Income from '@/lib/models/Income';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // GET handler to fetch all income
 export async function GET(request) {

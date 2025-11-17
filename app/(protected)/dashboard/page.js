@@ -1,11 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 import InfoCard from "@/components/InfoCard";
 import Transactions from "@/components/Transactions";
-import DoughnutChart from "@/components/DoughnutChart";
 import AllTeamsDropdown from "@/components/AllTeamsDropdown";
+
+// Dynamically import heavy chart component
+const DoughnutChart = dynamic(() => import("@/components/DoughnutChart"), {
+  ssr: false,
+  loading: () => <div style={{ textAlign: 'center', padding: '20px', color: '#8b8b8b' }}>Loading chart...</div>
+});
 import {
   FaWallet,
   FaArrowUp,
