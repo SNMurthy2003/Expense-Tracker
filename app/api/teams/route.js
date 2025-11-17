@@ -36,7 +36,7 @@ export async function POST(request) {
     await connectDB();
 
     const body = await request.json();
-    const { teamName, icon } = body;
+    const { teamName } = body;
 
     // Validation - ensure required fields
     if (!teamName) {
@@ -46,10 +46,9 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    // Create new team
+    // Create new team (only teamName field exists in schema)
     const team = new Team({
-      teamName,
-      icon: icon || "FaBriefcase"
+      teamName
     });
 
     const savedTeam = await team.save();
