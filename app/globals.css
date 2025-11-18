@@ -199,7 +199,7 @@ code {
   z-index: 2147483647 !important; /* Maximum safe z-index value */
 }
 
-/* All modal overlays - guaranteed top layer */
+/* All modal overlays - guaranteed top layer with perfect centering */
 #modal-root > *,
 [data-modal-portal="true"] > *,
 .modal-overlay,
@@ -210,14 +210,18 @@ code {
   inset: 0 !important;
   z-index: 1000000000 !important; /* 1 billion - guaranteed top */
   pointer-events: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-/* Modal content - even higher to ensure it's above the overlay */
+/* Modal content - centered by flex container, high z-index */
 .modal-content,
 [data-modal-content="true"] {
-  position: fixed !important;
+  position: relative !important;
   z-index: 1000000001 !important; /* 1 billion + 1 */
   pointer-events: auto !important;
+  margin: auto !important; /* Ensure perfect centering */
 }
 
 /* Global safeguard for any future modals */
