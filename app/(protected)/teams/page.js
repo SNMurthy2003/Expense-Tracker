@@ -1440,8 +1440,8 @@ export default function TeamsPage() {
           setDeleteTarget(null);
         }}
         onConfirm={handleDeleteConfirm}
-        itemName={deleteTarget?.item?.title}
-        itemType={deleteTarget?.type === 'income' ? 'Income' : 'Expense'}
+        itemName={deleteTarget?.type === 'team' ? deleteTarget?.item?.teamName : deleteTarget?.item?.title}
+        itemType={deleteTarget?.type === 'income' ? 'Income' : deleteTarget?.type === 'expense' ? 'Expense' : 'Team'}
       />
     </TeamsContainer>
   );
