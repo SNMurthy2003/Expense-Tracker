@@ -280,8 +280,6 @@ export default function DashboardPage() {
 
   return (
     <DashboardContainer>
-      <Header>Dashboard Overview</Header>
-
       {/* Team Dropdown */}
       <AllTeamsDropdown
         teams={teams}
