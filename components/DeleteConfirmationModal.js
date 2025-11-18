@@ -4,6 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import ModalPortal from '@/components/ModalPortal';
 
 const ModalOverlay = styled(motion.div)`
   display: flex;
@@ -256,53 +257,57 @@ const DeleteConfirmationModal = ({ show, onClose, onConfirm, itemName, itemType 
   return (
     <AnimatePresence mode="wait">
       {show && (
-        <ModalOverlay
-          variants={overlayVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={onClose}
-        >
-          <ModalContent
-            variants={modalVariants}
+        <ModalPortal>
+          <ModalOverlay
+            variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={e => e.stopPropagation()}
+            onClick={onClose}
+            data-modal="true"
           >
-            <IconWrapper>🗑️</IconWrapper>
+            <ModalContent
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={e => e.stopPropagation()}
+              data-modal-content="true"
+            >
+              <IconWrapper>🗑️</IconWrapper>
 
-            <ModalTitle>Delete {itemType}?</ModalTitle>
+              <ModalTitle>Delete {itemType}?</ModalTitle>
 
-            <ModalMessage>
-              Are you sure you want to delete this {itemType.toLowerCase()}? This action cannot be undone.
-            </ModalMessage>
+              <ModalMessage>
+                Are you sure you want to delete this {itemType.toLowerCase()}? This action cannot be undone.
+              </ModalMessage>
 
-            {itemName && <ItemName>{itemName}</ItemName>}
+              {itemName && <ItemName>{itemName}</ItemName>}
 
-            <ButtonGroup>
-              <Button
-                className="secondary"
-                onClick={onClose}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="danger"
-                onClick={() => {
-                  onConfirm();
-                  onClose();
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Delete
-              </Button>
-            </ButtonGroup>
-          </ModalContent>
-        </ModalOverlay>
+              <ButtonGroup>
+                <Button
+                  className="secondary"
+                  onClick={onClose}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="danger"
+                  onClick={() => {
+                    onConfirm();
+                    onClose();
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Delete
+                </Button>
+              </ButtonGroup>
+            </ModalContent>
+          </ModalOverlay>
+        </ModalPortal>
       )}
     </AnimatePresence>
   );

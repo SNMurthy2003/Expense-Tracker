@@ -173,3 +173,67 @@ code {
     font-size: 12px;
   }
 }
+
+/* ========================================
+   PERMANENT MODAL LAYERING FIX
+   DO NOT REMOVE OR MODIFY
+   ======================================== */
+
+/**
+ * These styles ensure that ALL modals in the application
+ * ALWAYS render above everything else, including:
+ * - Zeminent navbar
+ * - Parent layouts and wrappers
+ * - Any future components
+ *
+ * Using ultra-high z-index values (1 billion) to guarantee
+ * modals will never be covered by any UI element.
+ */
+
+/* Modal root container - always at top level */
+#modal-root,
+[data-modal-portal="true"] {
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 2147483647 !important; /* Maximum safe z-index value */
+}
+
+/* All modal overlays - guaranteed top layer */
+#modal-root > *,
+[data-modal-portal="true"] > *,
+.modal-overlay,
+.modal-root,
+.popup-container,
+[data-modal="true"] {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000000000 !important; /* 1 billion - guaranteed top */
+  pointer-events: auto !important;
+}
+
+/* Modal content - even higher to ensure it's above the overlay */
+.modal-content,
+[data-modal-content="true"] {
+  position: fixed !important;
+  z-index: 1000000001 !important; /* 1 billion + 1 */
+  pointer-events: auto !important;
+}
+
+/* Global safeguard for any future modals */
+*[data-modal],
+*[role="dialog"],
+*[role="alertdialog"] {
+  position: fixed !important;
+  z-index: 1000000000 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure modal ancestors don't create stacking contexts */
+#modal-root *,
+[data-modal-portal="true"] * {
+  /* Reset transform to prevent stacking context */
+  will-change: auto !important;
+}
+
+/* ======================================== */

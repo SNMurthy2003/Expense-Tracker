@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import ModalPortal from '@/components/ModalPortal';
 
 const ModalOverlay = styled(motion.div)`
   display: flex;
@@ -496,20 +497,23 @@ const EditExpenseModal = ({ show, onClose, onEditExpense, expense }) => {
   return (
     <AnimatePresence mode="wait">
       {show && (
-        <ModalOverlay
-          variants={overlayVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={handleClose}
-        >
-          <ModalContent
-            variants={modalVariants}
+        <ModalPortal>
+          <ModalOverlay
+            variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={e => e.stopPropagation()}
+            onClick={handleClose}
+            data-modal="true"
           >
+            <ModalContent
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={e => e.stopPropagation()}
+              data-modal-content="true"
+            >
             <ModalTitle>Edit Expense</ModalTitle>
 
             <AnimatePresence mode="wait">
@@ -605,9 +609,10 @@ const EditExpenseModal = ({ show, onClose, onEditExpense, expense }) => {
               >
                 Update Expense
               </Button>
-            </ButtonGroup>
-          </ModalContent>
-        </ModalOverlay>
+              </ButtonGroup>
+            </ModalContent>
+          </ModalOverlay>
+        </ModalPortal>
       )}
     </AnimatePresence>
   );

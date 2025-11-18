@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import ImageUpload from '@/components/ImageUpload';
+import ModalPortal from '@/components/ModalPortal';
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
@@ -552,20 +553,22 @@ const AddIncomeModal = ({ show, onClose, onAddIncome, preselectedTeam = '' }) =>
   return (
     <AnimatePresence mode="wait">
       {show && (
-        <ModalOverlay
-          variants={overlayVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={handleClose}
-        >
-          <motion.div
-            variants={modalContentVariants}
+        <ModalPortal>
+          <ModalOverlay
+            variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
+            onClick={handleClose}
+            data-modal="true"
           >
-            <ModalContent onClick={e => e.stopPropagation()}>
+            <motion.div
+              variants={modalContentVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <ModalContent onClick={e => e.stopPropagation()} data-modal-content="true">
             <ModalTitle>Credit</ModalTitle>
 
             <AnimatePresence mode="wait">
@@ -674,10 +677,11 @@ const AddIncomeModal = ({ show, onClose, onAddIncome, preselectedTeam = '' }) =>
               >
                 Credit
               </Button>
-            </ButtonGroup>
-            </ModalContent>
-          </motion.div>
-        </ModalOverlay>
+              </ButtonGroup>
+              </ModalContent>
+            </motion.div>
+          </ModalOverlay>
+        </ModalPortal>
       )}
     </AnimatePresence>
   );

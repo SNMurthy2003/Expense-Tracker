@@ -4,6 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import ModalPortal from '@/components/ModalPortal';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -63,13 +64,15 @@ const Modal = ({ show, onClose, title, children }) => {
   if (!show) return null;
 
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContent onClick={e => e.stopPropagation()}> {/* Prevent closing when clicking inside content */}
-        <CloseButton onClick={onClose}><FaTimes /></CloseButton>
-        <ModalTitle>{title}</ModalTitle>
-        {children}
-      </ModalContent>
-    </ModalOverlay>
+    <ModalPortal>
+      <ModalOverlay onClick={onClose} data-modal="true">
+        <ModalContent onClick={e => e.stopPropagation()} data-modal-content="true"> {/* Prevent closing when clicking inside content */}
+          <CloseButton onClick={onClose}><FaTimes /></CloseButton>
+          <ModalTitle>{title}</ModalTitle>
+          {children}
+        </ModalContent>
+      </ModalOverlay>
+    </ModalPortal>
   );
 };
 

@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import ModalPortal from '@/components/ModalPortal';
 
 const ModalOverlay = styled(motion.div)`
   display: flex;
@@ -496,20 +497,23 @@ const EditIncomeModal = ({ show, onClose, onEditIncome, income }) => {
   return (
     <AnimatePresence mode="wait">
       {show && (
-        <ModalOverlay
-          variants={overlayVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={handleClose}
-        >
-          <ModalContent
-            variants={modalVariants}
+        <ModalPortal>
+          <ModalOverlay
+            variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={e => e.stopPropagation()}
+            onClick={handleClose}
+            data-modal="true"
           >
+            <ModalContent
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={e => e.stopPropagation()}
+              data-modal-content="true"
+            >
             <ModalTitle>Edit Income</ModalTitle>
 
             <AnimatePresence mode="wait">
@@ -602,9 +606,10 @@ const EditIncomeModal = ({ show, onClose, onEditIncome, income }) => {
               >
                 Update Income
               </Button>
-            </ButtonGroup>
-          </ModalContent>
-        </ModalOverlay>
+              </ButtonGroup>
+            </ModalContent>
+          </ModalOverlay>
+        </ModalPortal>
       )}
     </AnimatePresence>
   );

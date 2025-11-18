@@ -32,6 +32,9 @@ export default function RootLayout({ children }) {
             {children}
           </ModalProvider>
         </StyledComponentsRegistry>
+        {/* PERMANENT MODAL ROOT - DO NOT REMOVE */}
+        {/* This div ensures all modals render at the top level, above all other UI */}
+        <div id="modal-root" data-modal-portal="true"></div>
       </body>
     </html>
   );
