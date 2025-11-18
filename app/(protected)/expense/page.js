@@ -23,9 +23,10 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ChartTit
 
 const ExpenseContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 30px;
   background: ${darkTheme.background.primary};
+  font-family: ${darkTheme.font.primary};
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -39,12 +40,12 @@ const ExpenseContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(124, 92, 255, 0.3);
+    background: rgba(176, 101, 255, 0.3);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(124, 92, 255, 0.5);
+    background: rgba(176, 101, 255, 0.5);
   }
 `;
 
@@ -59,19 +60,27 @@ const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;
   color: ${darkTheme.text.primary};
+  font-family: ${darkTheme.font.primary};
 `;
 
 const InfoBanner = styled.div`
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.1) 0%, rgba(167, 139, 250, 0.08) 100%);
-  border: 2px solid rgba(124, 92, 255, 0.2);
+  background: linear-gradient(135deg, rgba(176, 101, 255, 0.1) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border: 1px solid rgba(176, 101, 255, 0.3);
   border-radius: ${darkTheme.radius.md};
   padding: 14px 20px;
-  color: ${darkTheme.accent.purple};
+  color: ${darkTheme.brand.primary};
   font-weight: 600;
   font-size: 0.9rem;
+  font-family: ${darkTheme.font.primary};
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: all ${darkTheme.transition.normal};
+
+  &:hover {
+    border-color: ${darkTheme.brand.primary};
+    box-shadow: ${darkTheme.shadow.glow};
+  }
 
   &::before {
     content: '💡';
@@ -82,6 +91,7 @@ const InfoBanner = styled.div`
 const InfoText = styled.p`
   color: ${darkTheme.text.secondary};
   font-size: 0.9rem;
+  font-family: ${darkTheme.font.primary};
   margin-top: 5px;
   margin-bottom: 20px;
 `;
@@ -89,15 +99,20 @@ const InfoText = styled.p`
 const ChartSection = styled.div`
   background: ${darkTheme.background.panel};
   padding: 24px;
-  border-radius: ${darkTheme.radius.xl};
-  box-shadow: ${darkTheme.shadow.soft};
+  border-radius: ${darkTheme.radius.md};
+  box-shadow: ${darkTheme.shadow.cardShadow};
   margin-bottom: 30px;
-  border: 1px solid ${darkTheme.border.light};
-  transition: all 0.3s ease;
+  border: 1px solid ${darkTheme.border.card};
+  transition: all ${darkTheme.transition.normal};
   position: relative;
   overflow: hidden;
   width: 100%;
   max-width: 100%;
+
+  &:hover {
+    box-shadow: ${darkTheme.shadow.glow};
+    border-color: ${darkTheme.border.accent};
+  }
   height: 300px;
   display: flex;
   justify-content: center;
@@ -107,7 +122,7 @@ const ChartSection = styled.div`
   &:hover {
     box-shadow: ${darkTheme.shadow.medium};
     transform: translateY(-2px);
-    border-color: ${darkTheme.accent.purple};
+    border-color: ${darkTheme.brand.primary};
   }
 
   /* Decorative gradient top border for premium feel - matching BarChart */
@@ -118,7 +133,7 @@ const ChartSection = styled.div`
     left: 0;
     right: 0;
     height: 3px;
-    background: ${darkTheme.accent.gradientPurple};
+    background: ${darkTheme.brand.gradient};
     opacity: 0.8;
     box-shadow: 0 0 20px rgba(124, 92, 255, 0.3);
   }
@@ -204,7 +219,7 @@ export default function ExpensePage() {
       {
         label: 'Expenses',
         data: filteredExpenses.slice(0, 10).reverse().map(exp => exp.amount),
-        borderColor: darkTheme.accent.purple,
+        borderColor: darkTheme.brand.primary,
         backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -214,7 +229,7 @@ export default function ExpensePage() {
         },
         fill: true,
         tension: 0.4,
-        pointBackgroundColor: darkTheme.accent.purple,
+        pointBackgroundColor: darkTheme.brand.primary,
         pointBorderColor: '#fff',
         pointRadius: 6,
         pointHoverRadius: 8,

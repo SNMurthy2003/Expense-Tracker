@@ -15,9 +15,10 @@ import { darkTheme } from '@/styles/darkTheme';
 // --- Styled Components ---
 const TeamsContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 40px;
   background: ${darkTheme.background.primary};
+  font-family: ${darkTheme.font.primary};
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
@@ -30,11 +31,11 @@ const TeamsContainer = styled.div`
     background: rgba(255, 255, 255, 0.05);
   }
   &::-webkit-scrollbar-thumb {
-    background: rgba(27, 211, 255, 0.3);
+    background: rgba(176, 101, 255, 0.3);
     border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(27, 211, 255, 0.5);
+    background: rgba(176, 101, 255, 0.5);
   }
 
   /* Parallax background decorations */
@@ -45,7 +46,7 @@ const TeamsContainer = styled.div`
     right: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(27, 211, 255, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(176, 101, 255, 0.12) 0%, transparent 70%);
     border-radius: 50%;
     z-index: 0;
     animation: float 20s ease-in-out infinite;
@@ -58,7 +59,7 @@ const TeamsContainer = styled.div`
     left: -10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     z-index: 0;
     animation: float 25s ease-in-out infinite reverse;
@@ -86,26 +87,34 @@ const Header = styled.div`
 const Title = styled(motion.h2)`
   font-size: 2rem;
   font-weight: 700;
-  background: ${darkTheme.accent.gradient};
+  font-family: ${darkTheme.font.primary};
+  background: ${darkTheme.brand.gradient};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px rgba(27, 211, 255, 0.3);
+  text-shadow: 0 0 30px rgba(176, 101, 255, 0.3);
 `;
 
 const AddTeamButton = styled(motion.button)`
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.primary};
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: ${darkTheme.radius.md};
+  border-radius: ${darkTheme.radius.sm};
   cursor: pointer;
   font-weight: 600;
   font-size: 0.9rem;
-  box-shadow: ${darkTheme.accent.glowCyan};
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: ${darkTheme.font.primary};
+  box-shadow: ${darkTheme.shadow.glow};
+  transition: all ${darkTheme.transition.normal};
   position: relative;
   overflow: hidden;
+
+  &:hover {
+    background: ${darkTheme.brand.primaryHover};
+    transform: scale(1.05);
+    box-shadow: ${darkTheme.shadow.glowLarge};
+  }
 
   &::before {
     content: '';
@@ -129,7 +138,7 @@ const AddTeamButton = styled(motion.button)`
 
   &:active {
     transform: translateY(0);
-    box-shadow: ${darkTheme.accent.glowCyan};
+    box-shadow: ${darkTheme.shadow.glow};
   }
 `;
 
@@ -165,16 +174,16 @@ const TeamCard = styled(motion.div)`
     left: 0;
     right: 0;
     height: 3px;
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.gradient};
     opacity: ${props => props.expanded ? '1' : '0.6'};
     transition: opacity 0.3s ease;
-    box-shadow: ${props => props.expanded ? darkTheme.accent.glowCyan : 'none'};
+    box-shadow: ${props => props.expanded ? darkTheme.shadow.glow : 'none'};
   }
 
   &:hover {
     transform: translateY(-6px);
     box-shadow: ${darkTheme.shadow.medium};
-    border-color: ${darkTheme.accent.cyan};
+    border-color: ${darkTheme.brand.primary};
   }
 `;
 
@@ -200,14 +209,14 @@ const TeamIcon = styled.div`
   width: 48px;
   height: 48px;
   border-radius: ${darkTheme.radius.lg};
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.gradient};
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   font-weight: 700;
   color: white;
-  box-shadow: ${darkTheme.accent.glowCyan};
+  box-shadow: ${darkTheme.shadow.glow};
 `;
 
 const ExpandIcon = styled(motion.div)`
@@ -218,7 +227,7 @@ const ExpandIcon = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${darkTheme.accent.cyan};
+  color: ${darkTheme.brand.primary};
   font-size: 1.3rem;
   transition: all 0.3s ease;
 
@@ -242,7 +251,7 @@ const DeleteTeamButton = styled(motion.button)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${darkTheme.accent.purple};
+  color: ${darkTheme.brand.accent};
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -285,9 +294,9 @@ const StatLabel = styled.div`
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: ${props => {
-    if (props.type === 'income') return darkTheme.accent.teal;
-    if (props.type === 'expense') return darkTheme.accent.purple;
-    return darkTheme.accent.cyan;
+    if (props.type === 'income') return darkTheme.chart.income;
+    if (props.type === 'expense') return darkTheme.brand.accent;
+    return darkTheme.brand.primary;
   }};
   margin-bottom: 6px;
   opacity: 0.85;
@@ -297,9 +306,9 @@ const StatValue = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   color: ${props => {
-    if (props.type === 'income') return darkTheme.accent.teal;
-    if (props.type === 'expense') return darkTheme.accent.purple;
-    return darkTheme.accent.cyan;
+    if (props.type === 'income') return darkTheme.chart.income;
+    if (props.type === 'expense') return darkTheme.brand.accent;
+    return darkTheme.brand.primary;
   }};
 `;
 
@@ -314,7 +323,7 @@ const StatusBadge = styled.span`
     : 'linear-gradient(135deg, #64748b 0%, #475569 100%)'};
   color: white;
   box-shadow: ${props => props.active
-    ? darkTheme.accent.glowTeal
+    ? darkTheme.shadow.glow
     : '0 2px 8px rgba(100, 116, 139, 0.2)'};
 `;
 
@@ -334,7 +343,7 @@ const BalanceFill = styled(motion.div)`
     ? 'linear-gradient(90deg, #2dd4bf 0%, #14b8a6 100%)'
     : 'linear-gradient(90deg, #7c5cff 0%, #6366f1 100%)'};
   border-radius: 5px;
-  box-shadow: 0 0 10px ${props => props.positive ? darkTheme.accent.glowTeal : '0 0 10px rgba(124, 92, 255, 0.4)'};
+  box-shadow: 0 0 10px ${props => props.positive ? darkTheme.shadow.glow : '0 0 10px rgba(124, 92, 255, 0.4)'};
 `;
 
 const ExpandedContent = styled(motion.div)`
@@ -366,7 +375,7 @@ const ActionButton = styled(motion.button)`
   &.income {
     background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
     color: white;
-    box-shadow: ${darkTheme.accent.glowTeal};
+    box-shadow: ${darkTheme.shadow.glow};
 
     &:hover {
       box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
@@ -375,7 +384,7 @@ const ActionButton = styled(motion.button)`
   }
 
   &.expense {
-    background: ${darkTheme.accent.gradientPurple};
+    background: ${darkTheme.brand.gradientPurple};
     color: white;
     box-shadow: 0 4px 14px rgba(124, 92, 255, 0.3);
 
@@ -440,7 +449,7 @@ const TransactionItem = styled(motion.div)`
     : 'linear-gradient(135deg, rgba(124, 92, 255, 0.08) 0%, rgba(124, 92, 255, 0.04) 100%)'};
   padding: 14px 16px;
   border-radius: ${darkTheme.radius.md};
-  border-left: 3px solid ${props => props.type === 'income' ? darkTheme.accent.teal : darkTheme.accent.purple};
+  border-left: 3px solid ${props => props.type === 'income' ? darkTheme.chart.income : darkTheme.brand.accent};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -475,7 +484,7 @@ const TransactionDetails = styled.div`
 const TransactionAmount = styled.div`
   font-weight: 700;
   font-size: 1.1rem;
-  color: ${props => props.type === 'income' ? darkTheme.accent.teal : darkTheme.accent.purple};
+  color: ${props => props.type === 'income' ? darkTheme.chart.income : darkTheme.brand.accent};
   margin-right: 12px;
 `;
 
@@ -498,7 +507,7 @@ const IconButton = styled(motion.button)`
 
   &.edit {
     background: rgba(27, 211, 255, 0.1);
-    color: ${darkTheme.accent.cyan};
+    color: ${darkTheme.brand.primary};
 
     &:hover {
       background: rgba(27, 211, 255, 0.2);
@@ -508,7 +517,7 @@ const IconButton = styled(motion.button)`
 
   &.delete {
     background: rgba(124, 92, 255, 0.1);
-    color: ${darkTheme.accent.purple};
+    color: ${darkTheme.brand.accent};
 
     &:hover {
       background: rgba(124, 92, 255, 0.2);
@@ -565,7 +574,7 @@ const ModalContent = styled(motion.div)`
     inset: 0;
     border-radius: ${darkTheme.radius.xl};
     padding: 2px;
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.gradient};
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -593,7 +602,7 @@ const ModalTitle = styled.h3`
   font-weight: 700;
   letter-spacing: -0.02em;
   text-align: center;
-  text-shadow: ${darkTheme.accent.glowCyan};
+  text-shadow: ${darkTheme.shadow.glow};
 `;
 
 const Input = styled.input`
@@ -612,7 +621,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${darkTheme.accent.cyan};
+    border-color: ${darkTheme.brand.primary};
     background: rgba(255, 255, 255, 0.08);
     box-shadow:
       0 0 0 4px rgba(27, 211, 255, 0.15),
@@ -651,9 +660,9 @@ const Button = styled(motion.button)`
   letter-spacing: 0.02em;
 
   &.primary {
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.gradient};
     color: white;
-    box-shadow: ${darkTheme.accent.glowCyan};
+    box-shadow: ${darkTheme.shadow.glow};
     border: 1px solid rgba(255, 255, 255, 0.1);
 
     /* Animated glow */
@@ -685,7 +694,7 @@ const Button = styled(motion.button)`
 
     &:active {
       transform: translateY(-1px) scale(0.99);
-      box-shadow: ${darkTheme.accent.glowCyan};
+      box-shadow: ${darkTheme.shadow.glow};
     }
   }
 

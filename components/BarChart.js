@@ -20,7 +20,7 @@ const ChartWrapper = styled.div`
   &:hover {
     box-shadow: ${darkTheme.shadow.medium};
     transform: translateY(-2px);
-    border-color: ${darkTheme.accent.cyan};
+    border-color: ${darkTheme.brand.primary};
   }
 
   /* Decorative gradient top border for premium feel */
@@ -31,9 +31,9 @@ const ChartWrapper = styled.div`
     left: 0;
     right: 0;
     height: 3px;
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.gradient};
     opacity: 0.8;
-    box-shadow: ${darkTheme.accent.glowCyan};
+    box-shadow: ${darkTheme.shadow.glow};
   }
 `;
 
@@ -50,7 +50,7 @@ const Title = styled.h3`
   font-size: 1.3rem;
   font-weight: 700;
   color: ${darkTheme.text.primary};
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.gradient};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -83,7 +83,7 @@ const ChartPlaceholder = styled.div`
 
   /* Grid lines for better visual context */
   background-image:
-    linear-gradient(to bottom, transparent 99%, rgba(27, 211, 255, 0.08) 1%);
+    linear-gradient(to bottom, transparent 99%, rgba(176, 101, 255, 0.08) 1%);
   background-size: 100% 25%;
 
   &::before {
@@ -105,18 +105,14 @@ const ChartPlaceholder = styled.div`
 
 const Bar = styled.div`
   flex: 1;
-  /* Dynamic gradient based on chart type - teal for income, purple for expense */
-  background: ${props => props.chartType === 'expense'
-    ? darkTheme.accent.gradientPurple
-    : darkTheme.accent.gradient};
+  /* Dynamic gradient based on chart type - purple for both */
+  background: ${darkTheme.brand.gradient};
   height: ${props => props.height * 100}%;
   border-radius: 8px 8px 0 0;
   opacity: 0.95;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  box-shadow: ${props => props.chartType === 'expense'
-    ? darkTheme.accent.glowTeal
-    : darkTheme.accent.glowCyan};
+  box-shadow: ${darkTheme.shadow.glow};
   animation: barGrow 0.6s ease-out ${props => props.index * 0.1}s both;
 
   @keyframes barGrow {
@@ -145,9 +141,7 @@ const Bar = styled.div`
   &:hover {
     opacity: 1;
     transform: translateY(-4px) scale(1.02);
-    box-shadow: ${props => props.chartType === 'expense'
-      ? '0 -8px 20px rgba(124, 92, 255, 0.4)'
-      : '0 -8px 20px rgba(27, 211, 255, 0.4)'};
+    box-shadow: 0 -8px 20px rgba(176, 101, 255, 0.5);
   }
 
   &::after {

@@ -32,12 +32,14 @@ import { darkTheme } from "@/styles/darkTheme";
 // --- Styled Components ---
 const DashboardContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 30px;
   background: ${darkTheme.background.primary};
+  font-family: ${darkTheme.font.primary};
   position: relative;
   overflow-y: auto;
 
+  /* Purple ambient glow effects */
   &::before {
     content: '';
     position: fixed;
@@ -45,7 +47,7 @@ const DashboardContainer = styled.div`
     right: -10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(27, 211, 255, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(176, 101, 255, 0.12) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
@@ -59,7 +61,7 @@ const DashboardContainer = styled.div`
     left: 240px;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(124, 92, 255, 0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
@@ -77,30 +79,11 @@ const DashboardContainer = styled.div`
   }
 `;
 
-const Header = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 25px;
-  color: ${darkTheme.text.primary};
-  text-shadow: 0 0 30px rgba(27, 211, 255, 0.3);
-  animation: slideIn 0.5s ease-out;
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-`;
-
 const InfoCardsRow = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
+  margin-top: 20px;
   flex-wrap: wrap;
   animation: slideUp 0.6s ease-out 0.1s both;
 
@@ -144,6 +127,7 @@ const LoadingText = styled.p`
   color: ${darkTheme.text.secondary};
   font-size: 1.1rem;
   margin-top: 50px;
+  font-family: ${darkTheme.font.primary};
   animation: pulse 1.5s ease-in-out infinite;
 
   @keyframes pulse {

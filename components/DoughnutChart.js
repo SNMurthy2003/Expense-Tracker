@@ -9,27 +9,29 @@ import { darkTheme } from '@/styles/darkTheme';
 const ChartContainer = styled.div`
   background: ${darkTheme.background.panel};
   padding: 24px;
-  border-radius: ${darkTheme.radius.xl};
-  box-shadow: ${darkTheme.shadow.soft};
+  border-radius: ${darkTheme.radius.md};
+  box-shadow: ${darkTheme.shadow.cardShadow};
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 300px;
-  border: 1px solid ${darkTheme.border.light};
-  transition: all 0.3s ease;
+  border: 1px solid ${darkTheme.border.card};
+  transition: all ${darkTheme.transition.normal};
+  font-family: ${darkTheme.font.primary};
 
   &:hover {
-    box-shadow: ${darkTheme.shadow.medium};
-    transform: translateY(-2px);
+    box-shadow: ${darkTheme.shadow.glow};
+    border-color: ${darkTheme.border.accent};
   }
 `;
 
 const Title = styled.h3`
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 20px;
   align-self: flex-start;
   color: ${darkTheme.text.primary};
+  font-family: ${darkTheme.font.primary};
 `;
 
 const ChartVisual = styled.div`
@@ -90,18 +92,20 @@ const Legend = styled.div`
     align-items: center;
     padding: 8px 12px;
     border-radius: ${darkTheme.radius.sm};
-    background: ${darkTheme.background.glass};
-    transition: all 0.2s ease;
-    color: ${darkTheme.text.primary};
+    background: rgba(255, 255, 255, 0.05);
+    transition: all ${darkTheme.transition.normal};
+    color: ${darkTheme.text.secondary};
+    font-family: ${darkTheme.font.primary};
 
     &:hover {
-      background: rgba(27, 211, 255, 0.1);
+      background: rgba(176, 101, 255, 0.1);
+      border: 1px solid ${darkTheme.border.accent};
       transform: translateX(4px);
     }
   }
 
-  .expense-dot { color: ${darkTheme.chart.expense}; }
-  .balance-dot { color: ${darkTheme.accent.cyan}; }
+  .expense-dot { color: ${darkTheme.brand.primary}; }
+  .balance-dot { color: ${darkTheme.brand.accent}; }
   .income-dot { color: ${darkTheme.chart.income}; }
 
   .dot {
@@ -110,7 +114,6 @@ const Legend = styled.div`
     height: 10px;
     border-radius: 50%;
     margin-right: 10px;
-    box-shadow: ${darkTheme.shadow.soft};
   }
 `;
 
@@ -143,8 +146,8 @@ const DoughnutChart = ({ refreshTrigger }) => {
 
   const chartBackground = {
     background: `conic-gradient(
-      ${darkTheme.chart.expense} 0% ${expensePercent}%,
-      ${darkTheme.accent.cyan} ${expensePercent}% ${expensePercent + balancePercent}%,
+      ${darkTheme.brand.primary} 0% ${expensePercent}%,
+      ${darkTheme.brand.accent} ${expensePercent}% ${expensePercent + balancePercent}%,
       ${darkTheme.chart.income} ${expensePercent + balancePercent}% 100%
     )`
   };
@@ -160,11 +163,11 @@ const DoughnutChart = ({ refreshTrigger }) => {
       </ChartVisual>
       <Legend>
         <span>
-          <div className="dot expense-dot" style={{ backgroundColor: darkTheme.chart.expense }}></div>
+          <div className="dot expense-dot" style={{ backgroundColor: darkTheme.brand.primary }}></div>
           Total Expenses (${totalExpenses.toLocaleString()})
         </span>
         <span>
-          <div className="dot balance-dot" style={{ backgroundColor: darkTheme.accent.cyan }}></div>
+          <div className="dot balance-dot" style={{ backgroundColor: darkTheme.brand.accent }}></div>
           Total Balance (${totalBalance.toLocaleString()})
         </span>
         <span>

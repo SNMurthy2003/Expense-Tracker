@@ -15,7 +15,8 @@ const AppLayoutWrapper = styled.div`
 const ContentArea = styled.div`
   flex-grow: 1;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const AppLayout = ({ children, onLogout }) => {

@@ -9,14 +9,15 @@ import { darkTheme } from '@/styles/darkTheme';
 const TransactionList = styled.div`
   background: ${darkTheme.background.panel};
   padding: 24px;
-  border-radius: ${darkTheme.radius.xl};
-  box-shadow: ${darkTheme.shadow.soft};
-  border: 1px solid ${darkTheme.border.light};
-  transition: all 0.3s ease;
+  border-radius: ${darkTheme.radius.md};
+  box-shadow: ${darkTheme.shadow.cardShadow};
+  border: 1px solid ${darkTheme.border.card};
+  transition: all ${darkTheme.transition.normal};
+  font-family: ${darkTheme.font.primary};
 
   &:hover {
-    box-shadow: ${darkTheme.shadow.medium};
-    transform: translateY(-2px);
+    box-shadow: ${darkTheme.shadow.glow};
+    border-color: ${darkTheme.border.accent};
   }
 `;
 
@@ -26,26 +27,29 @@ const ListHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 12px;
-  border-bottom: 2px solid ${darkTheme.border.light};
+  border-bottom: 1px solid ${darkTheme.border.card};
 `;
 
 const Title = styled.h3`
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 600;
   color: ${darkTheme.text.primary};
+  font-family: ${darkTheme.font.primary};
 `;
 
 const SeeAll = styled.a`
-  color: ${darkTheme.accent.cyan};
+  color: ${darkTheme.brand.primary};
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all ${darkTheme.transition.normal};
   padding: 6px 12px;
   border-radius: ${darkTheme.radius.sm};
+  font-family: ${darkTheme.font.primary};
 
   &:hover {
-    background: rgba(27, 211, 255, 0.1);
+    background: rgba(176, 101, 255, 0.1);
+    color: ${darkTheme.brand.primaryHover};
     transform: translateX(2px);
   }
 `;
@@ -55,15 +59,15 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
-  border-bottom: 1px solid ${darkTheme.border.light};
-  transition: all 0.2s ease;
+  border-bottom: 1px solid ${darkTheme.border.card};
+  transition: all ${darkTheme.transition.normal};
 
   &:last-child {
     border-bottom: none;
   }
 
   &:hover {
-    background: rgba(27, 211, 255, 0.05);
+    background: rgba(176, 101, 255, 0.05);
     padding-left: 8px;
     padding-right: 8px;
     margin-left: -8px;
@@ -81,19 +85,20 @@ const IconBox = styled.div`
   width: 44px;
   height: 44px;
   border-radius: ${darkTheme.radius.md};
-  background: ${darkTheme.background.glass};
+  background: rgba(176, 101, 255, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
   margin-right: 15px;
-  color: ${darkTheme.accent.cyan};
-  box-shadow: ${darkTheme.shadow.soft};
-  transition: all 0.3s ease;
+  color: ${darkTheme.brand.primary};
+  border: 1px solid rgba(176, 101, 255, 0.2);
+  transition: all ${darkTheme.transition.normal};
 
   ${Item}:hover & {
-    transform: rotate(-5deg) scale(1.05);
-    box-shadow: ${darkTheme.shadow.medium};
+    transform: scale(1.05);
+    background: rgba(176, 101, 255, 0.15);
+    border-color: ${darkTheme.brand.primary};
   }
 `;
 

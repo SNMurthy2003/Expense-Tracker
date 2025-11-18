@@ -6,105 +6,64 @@ import { darkTheme } from '@/styles/darkTheme';
 const CardWrapper = styled.div`
   background: ${darkTheme.background.panel};
   padding: 24px;
-  border-radius: ${darkTheme.radius.lg};
+  border-radius: ${darkTheme.radius.md};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: ${darkTheme.shadow.soft};
+  box-shadow: ${darkTheme.shadow.cardShadow};
   flex: 1;
   min-width: 200px;
-  border: 1px solid ${darkTheme.border.light};
-  border-top: 2px solid ${props => {
-    switch(props.type) {
-      case 'income': return darkTheme.accent.teal;
-      case 'expense': return darkTheme.accent.purple;
-      default: return darkTheme.accent.cyan;
-    }
-  }};
-  transition: all 0.3s ease;
+  border: 1px solid ${darkTheme.border.card};
+  transition: all ${darkTheme.transition.normal};
   position: relative;
   overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: ${props => {
-      switch(props.type) {
-        case 'income': return darkTheme.accent.teal;
-        case 'expense': return darkTheme.accent.purple;
-        default: return darkTheme.accent.cyan;
-      }
-    }};
-    box-shadow: ${props => {
-      switch(props.type) {
-        case 'income': return darkTheme.accent.glowTeal;
-        case 'expense': return '0 0 20px rgba(124, 92, 255, 0.3)';
-        default: return darkTheme.accent.glowCyan;
-      }
-    }};
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  font-family: ${darkTheme.font.primary};
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${darkTheme.shadow.medium};
-    border-color: ${props => {
-      switch(props.type) {
-        case 'income': return darkTheme.accent.teal;
-        case 'expense': return darkTheme.accent.purple;
-        default: return darkTheme.accent.cyan;
-      }
-    }};
-
-    &::before {
-      opacity: 1;
-    }
+    transform: scale(1.05);
+    box-shadow: ${darkTheme.shadow.glow};
+    border-color: ${darkTheme.border.accent};
   }
 `;
 
 const IconCircle = styled.div`
   width: 56px;
   height: 56px;
-  border-radius: ${darkTheme.radius.lg};
+  border-radius: ${darkTheme.radius.md};
   background: ${props => {
     switch(props.type) {
       case 'income': return 'linear-gradient(135deg, rgba(45, 212, 191, 0.15) 0%, rgba(45, 212, 191, 0.08) 100%)';
-      case 'expense': return 'linear-gradient(135deg, rgba(124, 92, 255, 0.15) 0%, rgba(124, 92, 255, 0.08) 100%)';
-      default: return 'linear-gradient(135deg, rgba(27, 211, 255, 0.15) 0%, rgba(27, 211, 255, 0.08) 100%)';
+      case 'expense': return 'linear-gradient(135deg, rgba(176, 101, 255, 0.15) 0%, rgba(176, 101, 255, 0.08) 100%)';
+      default: return 'linear-gradient(135deg, rgba(176, 101, 255, 0.15) 0%, rgba(176, 101, 255, 0.08) 100%)';
     }
   }};
   color: ${props => {
     switch(props.type) {
-      case 'income': return darkTheme.accent.teal;
-      case 'expense': return darkTheme.accent.purple;
-      default: return darkTheme.accent.cyan;
+      case 'income': return darkTheme.chart.income;
+      case 'expense': return darkTheme.brand.primary;
+      default: return darkTheme.brand.primary;
     }
   }};
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.6rem;
-  transition: all 0.3s ease;
+  transition: all ${darkTheme.transition.normal};
   border: 1px solid ${props => {
     switch(props.type) {
       case 'income': return 'rgba(45, 212, 191, 0.2)';
-      case 'expense': return 'rgba(124, 92, 255, 0.2)';
-      default: return 'rgba(27, 211, 255, 0.2)';
+      case 'expense': return 'rgba(176, 101, 255, 0.2)';
+      default: return 'rgba(176, 101, 255, 0.2)';
     }
   }};
 
   ${CardWrapper}:hover & {
     transform: scale(1.08);
-    box-shadow: ${props => {
+    color: ${props => {
       switch(props.type) {
-        case 'income': return darkTheme.accent.glowTeal;
-        case 'expense': return '0 0 20px rgba(124, 92, 255, 0.3)';
-        default: return darkTheme.accent.glowCyan;
+        case 'income': return darkTheme.chart.income;
+        case 'expense': return darkTheme.brand.primary;
+        default: return darkTheme.brand.primary;
       }
     }};
   }
@@ -121,22 +80,18 @@ const Title = styled.p`
   font-weight: 500;
   letter-spacing: 0.3px;
   text-transform: uppercase;
+  font-family: ${darkTheme.font.primary};
 `;
 
 const Amount = styled.h3`
   font-size: 1.65rem;
   font-weight: 700;
   color: ${darkTheme.text.primary};
-  transition: color 0.3s ease;
+  transition: color ${darkTheme.transition.normal};
+  font-family: ${darkTheme.font.primary};
 
   ${CardWrapper}:hover & {
-    color: ${props => {
-      switch(props.type) {
-        case 'income': return darkTheme.accent.teal;
-        case 'expense': return darkTheme.accent.purple;
-        default: return darkTheme.accent.cyan;
-      }
-    }};
+    color: ${darkTheme.brand.primary};
   }
 `;
 

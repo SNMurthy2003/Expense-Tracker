@@ -24,7 +24,7 @@ const LoginContainer = styled.div`
   position: relative;
   overflow: hidden;
 
-  /* Animated background gradients */
+  /* Animated background gradients - Purple theme */
   &::before {
     content: '';
     position: fixed;
@@ -32,7 +32,7 @@ const LoginContainer = styled.div`
     right: -10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(27, 211, 255, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(176, 101, 255, 0.12) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
@@ -46,7 +46,7 @@ const LoginContainer = styled.div`
     left: -10%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(124, 92, 255, 0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
@@ -88,7 +88,7 @@ const Card = styled.div`
 /* Left panel */
 const LeftPanel = styled.div`
   flex: 1;
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.gradient};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +118,7 @@ const LeftPanel = styled.div`
 const WalletImage = styled.img`
   width: 90px;
   margin-bottom: 25px;
-  filter: drop-shadow(0 4px 12px rgba(27, 211, 255, 0.4));
+  filter: drop-shadow(0 4px 12px rgba(176, 101, 255, 0.4));
   position: relative;
   z-index: 1;
   animation: pulse 3s ease-in-out infinite;
@@ -174,9 +174,9 @@ const Input = styled.input`
   }
 
   &:focus {
-    border-color: ${darkTheme.accent.cyan};
+    border-color: ${darkTheme.brand.primary};
     outline: none;
-    box-shadow: 0 0 0 3px rgba(27, 211, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(176, 101, 255, 0.2);
     background: rgba(255, 255, 255, 0.06);
   }
 
@@ -188,7 +188,7 @@ const Input = styled.input`
 const LoginButton = styled.button`
   width: 100%;
   padding: 12px;
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.gradient};
   color: ${darkTheme.text.primary};
   border: none;
   border-radius: ${darkTheme.radius.md};
@@ -197,11 +197,11 @@ const LoginButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.3s ease;
-  box-shadow: ${darkTheme.accent.glowCyan};
+  box-shadow: ${darkTheme.shadow.glow};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(27, 211, 255, 0.4);
+    box-shadow: 0 6px 20px rgba(176, 101, 255, 0.4);
   }
 
   &:active {
@@ -231,8 +231,8 @@ const GoogleButton = styled.button`
 
   &:hover {
     background: ${darkTheme.background.glassHover};
-    border-color: ${darkTheme.accent.cyan};
-    box-shadow: 0 4px 12px rgba(27, 211, 255, 0.2);
+    border-color: ${darkTheme.brand.primary};
+    box-shadow: 0 4px 12px rgba(176, 101, 255, 0.3);
     transform: translateY(-2px);
   }
 
@@ -248,14 +248,14 @@ const LinkText = styled.p`
   color: ${darkTheme.text.secondary};
 
   a {
-    color: ${darkTheme.accent.cyan};
+    color: ${darkTheme.brand.primary};
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
 
     &:hover {
-      color: ${darkTheme.accent.teal};
-      text-shadow: 0 0 8px rgba(27, 211, 255, 0.4);
+      color: ${darkTheme.brand.primaryHover};
+      text-shadow: 0 0 8px rgba(176, 101, 255, 0.4);
     }
   }
 `;
@@ -267,12 +267,12 @@ const SmallLink = styled.p`
   margin-top: 10px;
 
   a {
-    color: ${darkTheme.accent.cyan};
+    color: ${darkTheme.brand.primary};
     text-decoration: none;
     transition: all 0.2s ease;
 
     &:hover {
-      color: ${darkTheme.accent.teal};
+      color: ${darkTheme.brand.primaryHover};
     }
   }
 `;

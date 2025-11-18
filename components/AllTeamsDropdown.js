@@ -34,23 +34,24 @@ const DropdownButton = styled(motion.button)`
     ? darkTheme.background.glass
     : darkTheme.background.panel};
   backdrop-filter: blur(8px) saturate(180%);
-  border: 1.5px solid ${props => props.isOpen ? darkTheme.accent.cyan : darkTheme.border.light};
+  border: 1.5px solid ${props => props.isOpen ? darkTheme.brand.primary : darkTheme.border.card};
   border-radius: ${darkTheme.radius.md};
   cursor: pointer;
   font-size: 0.8125rem;
   font-weight: 600;
+  font-family: ${darkTheme.font.primary};
   color: ${darkTheme.text.primary};
   box-shadow: ${props => props.isOpen
     ? darkTheme.shadow.glow
     : darkTheme.shadow.soft};
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all ${darkTheme.transition.normal};
   position: relative;
   white-space: nowrap;
 
   &:hover {
     transform: translateY(-1px);
     box-shadow: ${darkTheme.shadow.medium};
-    border-color: ${props => props.isOpen ? darkTheme.accent.cyan : darkTheme.border.medium};
+    border-color: ${props => props.isOpen ? darkTheme.brand.primary : darkTheme.border.accent};
     background: ${darkTheme.background.glassHover};
   }
 
@@ -60,7 +61,7 @@ const DropdownButton = styled(motion.button)`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(27, 211, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(176, 101, 255, 0.2);
   }
 `;
 
@@ -78,12 +79,12 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${darkTheme.accent.gradient};
+  background: ${darkTheme.brand.gradient};
   border-radius: 6px;
   color: white;
   font-size: 0.7rem;
   flex-shrink: 0;
-  box-shadow: ${darkTheme.accent.glowCyan};
+  box-shadow: ${darkTheme.shadow.glow};
 `;
 
 const ButtonText = styled.span`
@@ -113,13 +114,14 @@ const DropdownMenu = styled(motion.div)`
   min-width: 160px;
   background: ${darkTheme.background.panel};
   backdrop-filter: blur(16px) saturate(180%);
-  border: 1.5px solid ${darkTheme.border.medium};
+  border: 1.5px solid ${darkTheme.border.card};
   border-radius: ${darkTheme.radius.md};
   box-shadow: ${darkTheme.shadow.medium};
   overflow: hidden;
   max-height: 280px;
   overflow-y: auto;
   z-index: 1001;
+  font-family: ${darkTheme.font.primary};
 
   /* Gradient border effect */
   &::before {
@@ -128,7 +130,7 @@ const DropdownMenu = styled(motion.div)`
     inset: 0;
     border-radius: ${darkTheme.radius.md};
     padding: 1.5px;
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.gradient};
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -142,16 +144,16 @@ const DropdownMenu = styled(motion.div)`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(27, 211, 255, 0.04);
+    background: rgba(176, 101, 255, 0.05);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${darkTheme.accent.gradient};
+    background: ${darkTheme.brand.primary};
     border-radius: 2px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${darkTheme.accent.cyan};
+    background: ${darkTheme.brand.primaryHover};
   }
 `;
 
@@ -163,20 +165,20 @@ const MenuItem = styled(motion.div)`
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 500;
-  color: ${props => props.isSelected ? darkTheme.accent.cyan : darkTheme.text.secondary};
+  color: ${props => props.isSelected ? darkTheme.brand.primary : darkTheme.text.secondary};
   background: ${props => props.isSelected
-    ? 'linear-gradient(90deg, rgba(27, 211, 255, 0.1) 0%, rgba(45, 212, 191, 0.06) 100%)'
+    ? 'linear-gradient(90deg, rgba(176, 101, 255, 0.1) 0%, rgba(124, 58, 237, 0.06) 100%)'
     : 'transparent'};
-  border-left: 2.5px solid ${props => props.isSelected ? darkTheme.accent.cyan : 'transparent'};
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 2.5px solid ${props => props.isSelected ? darkTheme.brand.primary : 'transparent'};
+  transition: all ${darkTheme.transition.normal};
   position: relative;
 
   &:hover {
     background: ${props => props.isSelected
-      ? 'linear-gradient(90deg, rgba(27, 211, 255, 0.15) 0%, rgba(45, 212, 191, 0.1) 100%)'
-      : 'rgba(27, 211, 255, 0.05)'};
-    color: ${darkTheme.accent.cyan};
-    border-left-color: ${props => props.isSelected ? darkTheme.accent.cyan : 'rgba(27, 211, 255, 0.3)'};
+      ? 'linear-gradient(90deg, rgba(176, 101, 255, 0.15) 0%, rgba(124, 58, 237, 0.1) 100%)'
+      : 'rgba(176, 101, 255, 0.05)'};
+    color: ${darkTheme.brand.primary};
+    border-left-color: ${props => props.isSelected ? darkTheme.brand.primary : 'rgba(176, 101, 255, 0.3)'};
   }
 
   &:active {
@@ -184,7 +186,7 @@ const MenuItem = styled(motion.div)`
   }
 
   &:not(:last-child) {
-    border-bottom: 1px solid ${darkTheme.border.light};
+    border-bottom: 1px solid ${darkTheme.border.card};
   }
 `;
 
@@ -199,7 +201,7 @@ const CheckIcon = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${darkTheme.accent.cyan};
+  color: ${darkTheme.brand.primary};
   font-size: 0.75rem;
   margin-left: 8px;
 `;

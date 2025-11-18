@@ -10,9 +10,10 @@ import { darkTheme } from '@/styles/darkTheme';
 
 const IncomeContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   padding: 30px;
   background: ${darkTheme.background.primary};
+  font-family: ${darkTheme.font.primary};
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -26,12 +27,12 @@ const IncomeContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(27, 211, 255, 0.3);
+    background: rgba(176, 101, 255, 0.3);
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(27, 211, 255, 0.5);
+    background: rgba(176, 101, 255, 0.5);
   }
 `;
 
@@ -47,19 +48,27 @@ const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;
   color: ${darkTheme.text.primary};
+  font-family: ${darkTheme.font.primary};
 `;
 
 const InfoBanner = styled.div`
-  background: linear-gradient(135deg, rgba(27, 211, 255, 0.1) 0%, rgba(45, 212, 191, 0.08) 100%);
-  border: 2px solid rgba(27, 211, 255, 0.2);
+  background: linear-gradient(135deg, rgba(176, 101, 255, 0.1) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border: 1px solid rgba(176, 101, 255, 0.3);
   border-radius: ${darkTheme.radius.md};
   padding: 14px 20px;
-  color: ${darkTheme.accent.cyan};
+  color: ${darkTheme.brand.primary};
   font-weight: 600;
   font-size: 0.9rem;
+  font-family: ${darkTheme.font.primary};
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: all ${darkTheme.transition.normal};
+
+  &:hover {
+    border-color: ${darkTheme.brand.primary};
+    box-shadow: ${darkTheme.shadow.glow};
+  }
 
   &::before {
     content: '💡';
@@ -70,6 +79,7 @@ const InfoBanner = styled.div`
 const InfoText = styled.p`
   color: ${darkTheme.text.secondary};
   font-size: 0.9rem;
+  font-family: ${darkTheme.font.primary};
   margin-top: 5px;
   margin-bottom: 20px;
 `;
@@ -78,6 +88,7 @@ const LoadingText = styled.p`
   text-align: center;
   color: ${darkTheme.text.secondary};
   font-size: 1rem;
+  font-family: ${darkTheme.font.primary};
   margin-top: 50px;
 `;
 

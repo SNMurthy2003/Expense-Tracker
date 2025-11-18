@@ -15,8 +15,8 @@ const SidebarContainer = styled.div`
     background: ${darkTheme.background.sidebar};
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 4px 0 30px rgba(2, 8, 20, 0.5);
-    border-right: 1px solid ${darkTheme.border.light};
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+    border-right: 1px solid ${darkTheme.border.card};
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -24,6 +24,7 @@ const SidebarContainer = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
     flex-shrink: 0;
+    font-family: ${darkTheme.font.primary};
 
     /* Custom scrollbar styling */
     &::-webkit-scrollbar {
@@ -35,15 +36,15 @@ const SidebarContainer = styled.div`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: rgba(27, 211, 255, 0.2);
+        background: rgba(176, 101, 255, 0.3);
         border-radius: 3px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-        background: rgba(27, 211, 255, 0.4);
+        background: rgba(176, 101, 255, 0.5);
     }
 
-    /* Subtle cyan glow on the right edge */
+    /* Subtle purple glow on the right edge */
     &::after {
         content: '';
         position: absolute;
@@ -51,7 +52,7 @@ const SidebarContainer = styled.div`
         right: 0;
         width: 1px;
         height: 100%;
-        background: linear-gradient(180deg, transparent 0%, ${darkTheme.accent.cyan} 50%, transparent 100%);
+        background: linear-gradient(180deg, transparent 0%, ${darkTheme.brand.primary} 50%, transparent 100%);
         opacity: 0.3;
     }
 `;
@@ -80,7 +81,8 @@ const AppTitle = styled.h1`
     font-weight: 700;
     margin: 0;
     color: ${darkTheme.text.primary};
-    text-shadow: 0 0 30px rgba(27, 211, 255, 0.3);
+    font-family: ${darkTheme.font.primary};
+    text-shadow: 0 0 30px rgba(176, 101, 255, 0.3);
 `;
 
 const UserSection = styled.div`
@@ -130,23 +132,24 @@ const NavItem = styled.div`
     gap: 15px;
     padding: 14px 20px;
     cursor: pointer;
-    border-radius: ${darkTheme.radius.lg};
+    border-radius: ${darkTheme.radius.md};
     margin: 5px 15px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all ${darkTheme.transition.normal};
     white-space: nowrap;
     overflow: hidden;
     font-weight: 500;
     font-size: 0.95rem;
+    font-family: ${darkTheme.font.primary};
     position: relative;
     background: ${props => props.isActive
         ? darkTheme.sidebar.activeBg
         : 'transparent'};
-    color: ${props => props.isActive ? darkTheme.accent.cyan : darkTheme.text.secondary};
+    color: ${props => props.isActive ? darkTheme.brand.primary : darkTheme.text.secondary};
     box-shadow: ${props => props.isActive
         ? darkTheme.sidebar.activeGlow
         : 'none'};
     border: 1px solid ${props => props.isActive
-        ? 'rgba(27, 211, 255, 0.2)'
+        ? 'rgba(176, 101, 255, 0.3)'
         : 'transparent'};
 
     /* Left glow indicator for active state */
@@ -158,33 +161,33 @@ const NavItem = styled.div`
         transform: translateY(-50%);
         width: 3px;
         height: ${props => props.isActive ? '60%' : '0'};
-        background: ${darkTheme.accent.cyan};
+        background: ${darkTheme.brand.primary};
         border-radius: 0 4px 4px 0;
-        box-shadow: ${props => props.isActive ? darkTheme.accent.glowCyan : 'none'};
+        box-shadow: ${props => props.isActive ? darkTheme.shadow.glow : 'none'};
         transition: height 0.3s ease;
     }
 
     & > svg {
-        color: ${props => props.isActive ? darkTheme.accent.cyan : darkTheme.text.secondary};
+        color: ${props => props.isActive ? darkTheme.brand.primary : darkTheme.text.secondary};
         font-size: 1.1rem;
-        transition: all 0.3s ease;
+        transition: all ${darkTheme.transition.normal};
     }
 
     &:hover {
         background: ${props => props.isActive
             ? darkTheme.sidebar.activeBg
             : darkTheme.sidebar.hoverBg};
-        color: ${props => props.isActive ? darkTheme.accent.cyan : darkTheme.text.primary};
+        color: ${props => props.isActive ? darkTheme.brand.primary : darkTheme.text.primary};
         transform: translateX(4px);
         box-shadow: ${props => props.isActive
             ? darkTheme.sidebar.activeGlow
             : 'none'};
         border-color: ${props => props.isActive
-            ? 'rgba(27, 211, 255, 0.3)'
+            ? 'rgba(176, 101, 255, 0.4)'
             : 'rgba(255, 255, 255, 0.1)'};
 
         & > svg {
-            color: ${props => props.isActive ? darkTheme.accent.cyan : darkTheme.text.primary};
+            color: ${props => props.isActive ? darkTheme.brand.primary : darkTheme.text.primary};
             transform: scale(1.1);
         }
     }

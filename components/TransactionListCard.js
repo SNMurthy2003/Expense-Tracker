@@ -41,7 +41,7 @@ const DownloadButton = styled.button`
 
   &:hover {
     background-color: ${darkTheme.background.glass};
-    border-color: ${darkTheme.accent.cyan};
+    border-color: ${darkTheme.brand.primary};
   }
 `;
 
@@ -72,7 +72,7 @@ const IconBox = styled.div`
   align-items: center;
   font-size: 1rem;
   margin-right: 15px;
-  color: ${darkTheme.accent.cyan};
+  color: ${darkTheme.brand.primary};
 `;
 
 const NameDate = styled.div`
