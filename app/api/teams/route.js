@@ -39,7 +39,7 @@ export async function POST(request) {
     const { teamName } = body;
 
     // Validation - ensure required fields
-    if (!teamName) {
+    if (!teamName || !teamName.trim()) {
       return NextResponse.json({
         success: false,
         error: "Team name is required"
@@ -48,7 +48,7 @@ export async function POST(request) {
 
     // Create new team (only teamName field exists in schema)
     const team = new Team({
-      teamName
+      teamName: teamName.trim()
     });
 
     const savedTeam = await team.save();
@@ -61,6 +61,14 @@ export async function POST(request) {
 
   } catch (error) {
     console.error("Error creating team:", error);
+
+    // Handle duplicate team name error (MongoDB E11000)
+    if (error.code === 11000) {
+      return NextResponse.json({
+        success: false,
+        error: "Team name already exists. Please choose a different name."
+      }, { status: 400 });
+    }
 
     return NextResponse.json({
       success: false,
