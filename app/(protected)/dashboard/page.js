@@ -37,7 +37,7 @@ const DashboardContainer = styled.div`
   background: ${darkTheme.background.primary};
   font-family: ${darkTheme.font.primary};
   position: relative;
-  overflow-y: auto;
+  /* REMOVED: overflow-y: auto - This was clipping the dropdown menu */
 
   /* Purple ambient glow effects */
   &::before {
@@ -73,9 +73,16 @@ const DashboardContainer = styled.div`
     50% { transform: translate(30px, -30px) scale(1.05); }
   }
 
+  /* Ensure dropdown has higher z-index than all content */
   & > *:not([data-dropdown]) {
     position: relative;
     z-index: 1;
+  }
+
+  & > [data-dropdown],
+  & [data-dropdown="true"] {
+    position: relative;
+    z-index: 999999 !important;
   }
 `;
 
@@ -86,6 +93,8 @@ const InfoCardsRow = styled.div`
   margin-top: 20px;
   flex-wrap: wrap;
   animation: slideUp 0.6s ease-out 0.1s both;
+  position: relative;
+  z-index: 1;
 
   @keyframes slideUp {
     from {
@@ -105,6 +114,8 @@ const OverviewGrid = styled.div`
   gap: 30px;
   margin-bottom: 30px;
   animation: slideUp 0.6s ease-out 0.3s both;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -264,12 +275,16 @@ export default function DashboardPage() {
 
   return (
     <DashboardContainer>
-      {/* Team Dropdown */}
-      <AllTeamsDropdown
-        teams={teams}
-        selectedTeam={selectedTeam}
-        onTeamChange={setSelectedTeam}
-      />
+      {/* Team Dropdown - Moved to right with spacing */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px', marginRight: '20px', position: 'relative', zIndex: 1000000 }}>
+        <div style={{ width: '140px', position: 'relative', zIndex: 1000000 }}>
+          <AllTeamsDropdown
+            teams={teams}
+            selectedTeam={selectedTeam}
+            onTeamChange={setSelectedTeam}
+          />
+        </div>
+      </div>
 
       {/* Info Cards */}
       <InfoCardsRow>
@@ -280,13 +295,13 @@ export default function DashboardPage() {
           icon={FaWallet}
         />
         <InfoCard
-          title="Total Income"
+          title="Total Credit"
           amount={`${totalIncome.toLocaleString()}`}
           type="income"
           icon={FaArrowUp}
         />
         <InfoCard
-          title="Total Expenses"
+          title="Total Debit"
           amount={`${totalExpenses.toLocaleString()}`}
           type="expense"
           icon={FaArrowDown}

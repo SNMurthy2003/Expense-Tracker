@@ -45,10 +45,23 @@ const Header = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${darkTheme.text.primary};
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2dd4bf 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: ${darkTheme.font.primary};
+  letter-spacing: -0.5px;
+  transition: all ${darkTheme.transition.normal};
+  cursor: default;
+  position: relative;
+  display: inline-block;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(45, 212, 191, 0.5));
+  }
 `;
 
 const InfoBanner = styled.div`
@@ -130,7 +143,7 @@ export default function IncomePage() {
       setIncomeSources(mappedIncome);
       setTeams(teams);
     } catch (error) {
-      console.error('Error fetching income data:', error);
+      console.error('Error fetching credit data:', error);
     } finally {
       setLoading(false);
     }
@@ -159,7 +172,7 @@ export default function IncomePage() {
   if (loading) {
     return (
       <IncomeContainer>
-        <LoadingText>Loading income data...</LoadingText>
+        <LoadingText>Loading credit data...</LoadingText>
       </IncomeContainer>
     );
   }
@@ -167,13 +180,8 @@ export default function IncomePage() {
   return (
     <IncomeContainer>
       <Header>
-        <div>
-          <Title>Income Overview</Title>
-          <InfoText>Track your earnings over time and analyze your income trends</InfoText>
-        </div>
-        <InfoBanner>
-          To add new income, go to Teams page and select a team
-        </InfoBanner>
+        <div></div>
+        <Title>Credit</Title>
       </Header>
 
       {/* Team Dropdown */}
@@ -184,11 +192,11 @@ export default function IncomePage() {
       />
 
       {/* Pass refreshTrigger to BarChart */}
-      <BarChart title="Income Overview" data={filteredIncome} refreshTrigger={refreshTrigger} />
+      <BarChart title="Credit Overview" data={filteredIncome} refreshTrigger={refreshTrigger} />
 
       {/* Integrated delete success callback */}
       <TransactionListCard
-        title="Income Sources"
+        title="Credit Sources"
         transactions={filteredIncome}
         onDeleteSuccess={(deletedId) =>
           setIncomeSources((prev) => prev.filter((tx) => tx._id !== deletedId))

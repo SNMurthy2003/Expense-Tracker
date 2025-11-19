@@ -14,8 +14,9 @@ const DropdownContainer = styled.div`
   min-width: 160px;
   max-width: 180px;
   margin-bottom: 20px;
-  z-index: 1000;
+  z-index: 999999 !important;
   isolation: isolate;
+  pointer-events: auto;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -120,7 +121,7 @@ const DropdownMenu = styled(motion.div)`
   overflow: hidden;
   max-height: 280px;
   overflow-y: auto;
-  z-index: 1001;
+  z-index: 9999999 !important;
   font-family: ${darkTheme.font.primary};
 
   /* Gradient border effect */
@@ -317,8 +318,11 @@ const AllTeamsDropdown = ({ teams = [], selectedTeam, onTeamChange, label = "Sel
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen]);
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
+  const handleToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Dropdown toggled, current state:', isOpen);
+    setIsOpen(prev => !prev);
   };
 
   const handleSelect = (teamName) => {
@@ -345,11 +349,13 @@ const AllTeamsDropdown = ({ teams = [], selectedTeam, onTeamChange, label = "Sel
   return (
     <DropdownContainer ref={dropdownRef} data-dropdown="true">
       <DropdownButton
+        type="button"
         onClick={handleToggle}
         isOpen={isOpen}
         whileTap={{ scale: 0.98 }}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        style={{ pointerEvents: 'auto', userSelect: 'none' }}
       >
         <ButtonContent>
           <IconWrapper>

@@ -57,10 +57,23 @@ const Header = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${darkTheme.text.primary};
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #b065ff 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: ${darkTheme.font.primary};
+  letter-spacing: -0.5px;
+  transition: all ${darkTheme.transition.normal};
+  cursor: default;
+  position: relative;
+  display: inline-block;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(176, 101, 255, 0.5));
+  }
 `;
 
 const InfoBanner = styled.div`
@@ -181,7 +194,7 @@ export default function ExpensePage() {
       setExpenses(mappedExpenses);
       setTeams(teams);
     } catch (error) {
-      console.error('Error fetching expense data:', error);
+      console.error('Error fetching debit data:', error);
     } finally {
       setLoading(false);
     }
@@ -217,7 +230,7 @@ export default function ExpensePage() {
     ),
     datasets: [
       {
-        label: 'Expenses',
+        label: 'Debits',
         data: filteredExpenses.slice(0, 10).reverse().map(exp => exp.amount),
         borderColor: darkTheme.brand.primary,
         backgroundColor: (context) => {
@@ -250,7 +263,7 @@ export default function ExpensePage() {
   if (loading) {
     return (
       <ExpenseContainer>
-        <LoadingText>Loading expense data...</LoadingText>
+        <LoadingText>Loading debit data...</LoadingText>
       </ExpenseContainer>
     );
   }
@@ -258,13 +271,8 @@ export default function ExpensePage() {
   return (
     <ExpenseContainer>
       <Header>
-        <div>
-          <Title>Expense Overview</Title>
-          <InfoText>Track your spending trends over time and gain insights into where your money goes</InfoText>
-        </div>
-        <InfoBanner>
-          To add new expenses, go to Teams page and select a team
-        </InfoBanner>
+        <div></div>
+        <Title>Debit</Title>
       </Header>
 
       {/* Team Dropdown */}
@@ -280,7 +288,7 @@ export default function ExpensePage() {
 
       {/* Integrated delete success callback */}
       <TransactionListCard
-        title="All Expenses"
+        title="All Debits"
         transactions={filteredExpenses}
         onDeleteSuccess={(deletedId) =>
           setExpenses((prev) => prev.filter((tx) => tx._id !== deletedId))
