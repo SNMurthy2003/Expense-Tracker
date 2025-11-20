@@ -844,8 +844,9 @@ export default function TeamsPage() {
       });
 
       if (response.ok) {
-        const savedTeam = await response.json();
-        setTeams(prev => [savedTeam, ...prev]);
+        const result = await response.json();
+        // Extract the team object from the data property
+        setTeams(prev => [result.data, ...prev]);
         setShowAddTeamModal(false);
         setNewTeam({ teamName: '' });
       } else {
@@ -995,12 +996,24 @@ export default function TeamsPage() {
 
   const handleDeleteTeam = async (teamId) => {
     try {
+      // Find the team to get its name before deleting
+      const teamToDelete = teams.find(t => t._id === teamId);
+      if (!teamToDelete) {
+        alert('Team not found.');
+        return;
+      }
+
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
+        const teamName = teamToDelete.teamName;
+
+        // CASCADE DELETE: Remove team and all related data from state
         setTeams(prev => prev.filter(team => team._id !== teamId));
+        setIncomes(prev => prev.filter(inc => inc.teamName !== teamName));
+        setExpenses(prev => prev.filter(exp => exp.teamName !== teamName));
         setExpandedCard(null); // Close any expanded card
       } else {
         alert('Failed to delete team. Please try again.');
