@@ -7,6 +7,16 @@ import TransactionListCard from '@/components/TransactionListCard';
 import AllTeamsDropdown from '@/components/AllTeamsDropdown';
 import { FaBriefcase, FaPiggyBank, FaShopify, FaDollarSign } from 'react-icons/fa';
 import { darkTheme } from '@/styles/darkTheme';
+import { auth } from '@/firebase';
+
+// Helper to get auth headers with user ID
+const getAuthHeaders = () => {
+  const user = auth.currentUser;
+  return {
+    'Content-Type': 'application/json',
+    ...(user && { 'x-user-id': user.uid })
+  };
+};
 
 const IncomeContainer = styled.div`
   width: 100%;
@@ -118,9 +128,10 @@ export default function IncomePage() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const headers = getAuthHeaders();
       const [incomeRes, teamRes] = await Promise.all([
-        fetch('/api/income'),
-        fetch('/api/teams')
+        fetch('/api/income', { headers }),
+        fetch('/api/teams', { headers })
       ]);
 
       const [incomeData, teamData] = await Promise.all([

@@ -11,6 +11,16 @@ import EditIncomeModal from '@/components/EditIncomeModal';
 import EditExpenseModal from '@/components/EditExpenseModal';
 import DeleteConfirmationModal from '@/components/DeleteConfirmationModal';
 import { darkTheme } from '@/styles/darkTheme';
+import { auth } from '@/firebase';
+
+// Helper to get auth headers with user ID
+const getAuthHeaders = () => {
+  const user = auth.currentUser;
+  return {
+    'Content-Type': 'application/json',
+    ...(user && { 'x-user-id': user.uid })
+  };
+};
 
 // --- Styled Components ---
 const TeamsContainer = styled.div`
@@ -781,10 +791,11 @@ export default function TeamsPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const headers = getAuthHeaders();
       const [teamRes, incomeRes, expenseRes] = await Promise.all([
-        fetch('/api/teams'),
-        fetch('/api/income'),
-        fetch('/api/expense')
+        fetch('/api/teams', { headers }),
+        fetch('/api/income', { headers }),
+        fetch('/api/expense', { headers })
       ]);
 
       const [teamData, incomeData, expenseData] = await Promise.all([
@@ -838,9 +849,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch('/api/teams', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ teamName: newTeam.teamName }),
       });
 
@@ -864,9 +873,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch(`/api/income/${selectedIncome._id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(updatedData),
       });
 
@@ -888,6 +895,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch(`/api/income/${incomeId}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
 
       if (response.ok) {
@@ -906,9 +914,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch('/api/income', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(incomeData),
       });
 
@@ -932,9 +938,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch('/api/expense', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(expenseData),
       });
 
@@ -958,9 +962,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch(`/api/expense/${selectedExpense._id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(updatedData),
       });
 
@@ -982,6 +984,7 @@ export default function TeamsPage() {
     try {
       const response = await fetch(`/api/expense/${expenseId}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
 
       if (response.ok) {
@@ -1006,6 +1009,7 @@ export default function TeamsPage() {
 
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
 
       if (response.ok) {

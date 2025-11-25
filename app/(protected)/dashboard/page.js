@@ -28,6 +28,16 @@ import {
   FaShoppingBag
 } from "react-icons/fa";
 import { darkTheme } from "@/styles/darkTheme";
+import { auth } from '@/firebase';
+
+// Helper to get auth headers with user ID
+const getAuthHeaders = () => {
+  const user = auth.currentUser;
+  return {
+    'Content-Type': 'application/json',
+    ...(user && { 'x-user-id': user.uid })
+  };
+};
 
 // --- Styled Components ---
 const DashboardContainer = styled.div`
@@ -188,10 +198,11 @@ export default function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const headers = getAuthHeaders();
       const [incomeRes, expenseRes, teamRes] = await Promise.all([
-        fetch('/api/income'),
-        fetch('/api/expense'),
-        fetch('/api/teams'),
+        fetch('/api/income', { headers }),
+        fetch('/api/expense', { headers }),
+        fetch('/api/teams', { headers }),
       ]);
 
       const [incomeData, expenseData, teamData] = await Promise.all([

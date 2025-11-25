@@ -1,10 +1,28 @@
 // utils/api.js - Next.js API utilities using native fetch
+import { auth } from '@/firebase';
+
+// Helper to get current user ID
+const getUserId = () => {
+  const user = auth.currentUser;
+  return user ? user.uid : null;
+};
+
+// Helper to get headers with user ID
+const getAuthHeaders = () => {
+  const userId = getUserId();
+  return {
+    'Content-Type': 'application/json',
+    ...(userId && { 'x-user-id': userId })
+  };
+};
 
 // ==================== INCOME APIs ====================
 
 export const getIncomes = async () => {
   try {
-    const response = await fetch('/api/income');
+    const response = await fetch('/api/income', {
+      headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Failed to fetch incomes');
     const data = await response.json();
     return data.data || data || [];
@@ -18,9 +36,7 @@ export const addIncome = async (incomeData) => {
   try {
     const response = await fetch('/api/income', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(incomeData),
     });
 
@@ -37,9 +53,7 @@ export const updateIncome = async (id, incomeData) => {
   try {
     const response = await fetch(`/api/income/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(incomeData),
     });
 
@@ -56,6 +70,7 @@ export const deleteIncome = async (id) => {
   try {
     const response = await fetch(`/api/income/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) throw new Error('Failed to delete income');
@@ -68,7 +83,9 @@ export const deleteIncome = async (id) => {
 
 export const getTotalIncome = async () => {
   try {
-    const response = await fetch('/api/income');
+    const response = await fetch('/api/income', {
+      headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Failed to fetch total income');
     const data = await response.json();
     const incomes = data.data || data || [];
@@ -86,7 +103,9 @@ export const getTotalIncome = async () => {
 
 export const getExpenses = async () => {
   try {
-    const response = await fetch('/api/expense');
+    const response = await fetch('/api/expense', {
+      headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Failed to fetch expenses');
     const data = await response.json();
     return data.data || data || [];
@@ -100,9 +119,7 @@ export const addExpense = async (expenseData) => {
   try {
     const response = await fetch('/api/expense', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(expenseData),
     });
 
@@ -119,9 +136,7 @@ export const updateExpense = async (id, expenseData) => {
   try {
     const response = await fetch(`/api/expense/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(expenseData),
     });
 
@@ -138,6 +153,7 @@ export const deleteExpense = async (id) => {
   try {
     const response = await fetch(`/api/expense/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) throw new Error('Failed to delete expense');
@@ -150,7 +166,9 @@ export const deleteExpense = async (id) => {
 
 export const getTotalExpenses = async () => {
   try {
-    const response = await fetch('/api/expense');
+    const response = await fetch('/api/expense', {
+      headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Failed to fetch total expenses');
     const data = await response.json();
     const expenses = data.data || data || [];
@@ -168,7 +186,9 @@ export const getTotalExpenses = async () => {
 
 export const getTeams = async () => {
   try {
-    const response = await fetch('/api/teams');
+    const response = await fetch('/api/teams', {
+      headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Failed to fetch teams');
     const data = await response.json();
     return data.data || data || [];
@@ -182,9 +202,7 @@ export const addTeam = async (teamData) => {
   try {
     const response = await fetch('/api/teams', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(teamData),
     });
 
@@ -200,9 +218,7 @@ export const updateTeam = async (id, teamData) => {
   try {
     const response = await fetch(`/api/teams/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify(teamData),
     });
 
@@ -218,6 +234,7 @@ export const deleteTeam = async (id) => {
   try {
     const response = await fetch(`/api/teams/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) throw new Error('Failed to delete team');

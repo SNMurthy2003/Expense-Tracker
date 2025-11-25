@@ -18,8 +18,18 @@ import {
 import TransactionListCard from '@/components/TransactionListCard';
 import AllTeamsDropdown from '@/components/AllTeamsDropdown';
 import { darkTheme } from '@/styles/darkTheme';
+import { auth } from '@/firebase';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ChartTitle, Tooltip, Legend, Filler);
+
+// Helper to get auth headers with user ID
+const getAuthHeaders = () => {
+  const user = auth.currentUser;
+  return {
+    'Content-Type': 'application/json',
+    ...(user && { 'x-user-id': user.uid })
+  };
+};
 
 const ExpenseContainer = styled.div`
   width: 100%;
@@ -169,9 +179,10 @@ export default function ExpensePage() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const headers = getAuthHeaders();
       const [expenseRes, teamRes] = await Promise.all([
-        fetch('/api/expense'),
-        fetch('/api/teams')
+        fetch('/api/expense', { headers }),
+        fetch('/api/teams', { headers })
       ]);
 
       const [expenseData, teamData] = await Promise.all([
