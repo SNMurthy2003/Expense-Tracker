@@ -78,9 +78,10 @@ const TeamsContainer = styled.div`
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 40px;
+  padding-right: 20px;
   position: relative;
 `;
 
