@@ -8,6 +8,7 @@ import AllTeamsDropdown from '@/components/AllTeamsDropdown';
 import { FaBriefcase, FaPiggyBank, FaShopify, FaDollarSign } from 'react-icons/fa';
 import { darkTheme } from '@/styles/darkTheme';
 import { auth } from '@/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // Helper to get auth headers with user ID
 const getAuthHeaders = () => {
@@ -161,7 +162,13 @@ export default function IncomePage() {
   };
 
   useEffect(() => {
-    fetchData();
+    // Wait for Firebase auth to be ready before fetching data
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchData();
+      }
+    });
+    return () => unsubscribe();
   }, [refreshTrigger]);
 
   // Get icon based on category

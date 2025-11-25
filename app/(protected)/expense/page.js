@@ -19,6 +19,7 @@ import TransactionListCard from '@/components/TransactionListCard';
 import AllTeamsDropdown from '@/components/AllTeamsDropdown';
 import { darkTheme } from '@/styles/darkTheme';
 import { auth } from '@/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ChartTitle, Tooltip, Legend, Filler);
 
@@ -212,7 +213,13 @@ export default function ExpensePage() {
   };
 
   useEffect(() => {
-    fetchData();
+    // Wait for Firebase auth to be ready before fetching data
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchData();
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   // Get icon based on category
