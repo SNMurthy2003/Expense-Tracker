@@ -1068,13 +1068,6 @@ export default function TeamsPage() {
   return (
     <TeamsContainer onClick={handleBackgroundClick}>
       <Header onClick={(e) => e.stopPropagation()}>
-        <Title
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          Teams & Finances
-        </Title>
         <AddTeamButton
           onClick={() => setShowAddTeamModal(true)}
           whileHover={{ scale: 1.05 }}
