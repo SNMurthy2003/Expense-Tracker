@@ -8,11 +8,22 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 // DELETE handler to remove a team by ID and cascade delete all related data
+// Only the team creator can delete the team
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
 
     const { id } = params;
+
+    // Get user ID from header (sent by frontend)
+    const userId = request.headers.get('x-user-id');
+
+    if (!userId) {
+      return NextResponse.json({
+        success: false,
+        message: "User not authenticated"
+      }, { status: 401 });
+    }
 
     if (!id) {
       return NextResponse.json({
@@ -21,23 +32,34 @@ export async function DELETE(request, { params }) {
       }, { status: 400 });
     }
 
-    // First, find the team to get the teamName
-    const deletedTeam = await Team.findByIdAndDelete(id);
+    // First, find the team to verify ownership
+    const team = await Team.findById(id);
 
-    if (!deletedTeam) {
+    if (!team) {
       return NextResponse.json({
         success: false,
         message: "Team not found"
       }, { status: 404 });
     }
 
+    // Check if user is the creator
+    if (team.createdBy !== userId) {
+      return NextResponse.json({
+        success: false,
+        message: "Only the team creator can delete this team"
+      }, { status: 403 });
+    }
+
+    // Delete the team
+    await Team.findByIdAndDelete(id);
+
     // CASCADE DELETE: Remove all related income and expense entries
     const [deletedIncomes, deletedExpenses] = await Promise.all([
-      Income.deleteMany({ teamName: deletedTeam.teamName }),
-      Expense.deleteMany({ teamName: deletedTeam.teamName })
+      Income.deleteMany({ teamName: team.teamName }),
+      Expense.deleteMany({ teamName: team.teamName })
     ]);
 
-    console.log("✅ Team deleted successfully:", deletedTeam.teamName);
+    console.log("✅ Team deleted successfully:", team.teamName);
     console.log(`   └─ Deleted ${deletedIncomes.deletedCount} income entries`);
     console.log(`   └─ Deleted ${deletedExpenses.deletedCount} expense entries`);
 
@@ -45,7 +67,7 @@ export async function DELETE(request, { params }) {
       success: true,
       message: "Team and all related data deleted successfully",
       data: {
-        team: deletedTeam,
+        team: team,
         deletedIncomes: deletedIncomes.deletedCount,
         deletedExpenses: deletedExpenses.deletedCount
       }
