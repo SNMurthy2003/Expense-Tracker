@@ -853,10 +853,20 @@ export default function TeamsPage() {
       return;
     }
 
+    // Check if user is authenticated
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please log in to add a team');
+      return;
+    }
+
     try {
       const response = await fetch('/api/teams', {
         method: 'POST',
-        headers: getAuthHeaders(),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-user-id': user.uid
+        },
         body: JSON.stringify({ teamName: newTeam.teamName }),
       });
 
@@ -867,7 +877,8 @@ export default function TeamsPage() {
         setShowAddTeamModal(false);
         setNewTeam({ teamName: '' });
       } else {
-        alert('Failed to add team. Please try again.');
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to add team. Please try again.');
       }
     } catch (error) {
       console.error('Error adding team:', error);
